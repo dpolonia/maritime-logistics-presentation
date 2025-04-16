@@ -50,5 +50,22 @@
     "NEXT_PUBLIC_ANALYTICS_ID": "enabled",
     "NEXT_PUBLIC_SESSION_RECORDING": "enabled",
     "NEXT_PUBLIC_API_ENDPOINT": "https://api.example.com"
+  },
+  "redirects": [
+    {
+      "source": "/session2",
+      "destination": "/sessions/2",
+      "permanent": true
+    },
+    {
+      "source": "/s2",
+      "destination": "/sessions/2",
+      "permanent": true
+    }
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
   }
 }
