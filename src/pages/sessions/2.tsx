@@ -40,11 +40,53 @@ export default function Session2() {
     return <div className={styles.loading}>Loading session...</div>;
   }
 
+  // Check if we're on the client side and window exists
+  const isBrowser = typeof window !== 'undefined';
+
+  // Simplified version if client-side rendering fails
+  const renderStaticContent = () => (
+    <div className={styles.staticContent}>
+      <h1>Session 2: Technology Stack for Maritime and Logistics Innovation</h1>
+      <div className={styles.contentSection}>
+        <h2>Learning Objectives</h2>
+        <ul>
+          <li>Evaluate Technology Applicability</li>
+          <li>Analyze Implementation Prerequisites</li>
+          <li>Map Technology-Challenge Alignment</li>
+          <li>Identify Integration Requirements</li>
+          <li>Develop Technology Roadmaps</li>
+        </ul>
+      </div>
+      
+      <div className={styles.contentSection}>
+        <h2>Technology Context in Maritime and Logistics</h2>
+        <ul>
+          <li>Digital Maturity</li>
+          <li>Maritime Adaptations</li>
+          <li>NEXUS Strategy</li>
+        </ul>
+      </div>
+      
+      <div className={styles.contentSection}>
+        <h2>Key Technologies</h2>
+        <ul>
+          <li>AI and Machine Learning Applications</li>
+          <li>Blockchain and Distributed Ledger Technologies</li>
+          <li>IoT, Cloud, and Edge Computing</li>
+          <li>Next-Generation Connectivity</li>
+        </ul>
+      </div>
+    </div>
+  );
+
   return (
     <div className={styles.container}>
       <Head>
         <title>Session 2: Technology Stack for Maritime and Logistics Innovation | NEXUS Agenda Course</title>
         <meta name="description" content="Session 2: Technology Stack for Maritime and Logistics Innovation - Learn about advanced technologies for maritime and logistics applications" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.4.0/reveal.min.js" integrity="sha512-uQGK5PG+lXhUcEkyCNXKF+FzPvn1hR7m4+IuUUk4ZjM+KNCfVCbX0compare8+GEQshyGDXLEb5y/hGaqYJMiNA==" crossOrigin="anonymous" referrerPolicy="no-referrer"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.4.0/reveal.min.css" integrity="sha512-A5PKBHoJQHdKjxpwyV+XRWZWMcjPxroskfs5F95LggC1RBJRMgPuDQBX/T8KY6MWIxPIR7B9cKGzZK4vOBbug==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.4.0/theme/white.min.css" integrity="sha512-RrJL9gr0t1RKbp5Ctt8UgiHnreUjUTSjVWQJw4T+tk+7UtTEibzei9pr0QBWZqJ9uR3EkL1JBr1TmMNEmzGngQ==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
       </Head>
 
       <header className={styles.header}>
@@ -55,7 +97,8 @@ export default function Session2() {
       </header>
 
       <main className={styles.main}>
-        <RevealWrapper
+        {isBrowser ? (
+          <RevealWrapper
           config={{
             controls: true,
             progress: true,
@@ -683,6 +726,7 @@ export default function Session2() {
             </div>
           </section>
         </RevealWrapper>
+        ) : renderStaticContent()}
       </main>
     </div>
   );

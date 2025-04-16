@@ -1,6 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import 'reveal.js/dist/reveal.css';
-import 'reveal.js/dist/theme/white.css';
+import dynamic from 'next/dynamic';
+
+// Cannot import CSS server-side
+const RevealStyles = dynamic(
+  () => import('./RevealStyles'),
+  { ssr: false }
+);
 
 interface RevealWrapperProps {
   children: React.ReactNode;
@@ -27,51 +32,56 @@ const RevealWrapper: React.FC<RevealWrapperProps> = ({ children, config = {} }) 
   const revealRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    let Reveal: any;
+    // Only run in browser
+    if (typeof window === 'undefined' || !revealRef.current) return;
     
-    // Dynamically import Reveal.js
-    const loadReveal = async () => {
+    // Import Reveal.js dynamically
+    const importReveal = async () => {
       try {
-        Reveal = (await import('reveal.js')).default;
+        // First load reveal.js
+        const RevealModule = await import('reveal.js');
+        const Reveal = RevealModule.default;
         
-        if (revealRef.current) {
-          const reveal = new Reveal(revealRef.current, {
-            controls: config.controls !== false,
-            progress: config.progress !== false,
-            center: config.center !== false,
-            hash: true,
-            transition: config.transition || 'slide',
-            backgroundTransition: config.backgroundTransition || 'fade',
-            viewDistance: config.viewDistance || 3,
-            autoPlayMedia: config.autoPlayMedia !== false,
-            fragments: config.fragments !== false,
-            ...config
-          });
-          
-          await reveal.initialize();
-          console.log('Reveal.js initialized successfully');
-        }
+        // Configure and initialize
+        const reveal = new Reveal(revealRef.current, {
+          controls: config.controls !== false,
+          progress: config.progress !== false,
+          center: config.center !== false,
+          hash: true,
+          transition: config.transition || 'slide',
+          backgroundTransition: config.backgroundTransition || 'fade',
+          viewDistance: config.viewDistance || 3,
+          autoPlayMedia: config.autoPlayMedia !== false,
+          fragments: config.fragments !== false,
+          ...config
+        });
+        
+        await reveal.initialize();
+        console.log('Reveal.js initialized successfully');
       } catch (error) {
         console.error('Failed to initialize Reveal.js:', error);
       }
     };
     
-    loadReveal();
+    // Load reveal.js
+    importReveal();
     
     return () => {
-      // No explicit cleanup needed as Reveal.js doesn't provide a destroy method
-      // But we could remove event listeners if needed
+      // Cleanup could be added here if needed
     };
   }, [config]);
   
   return (
-    <div className="reveal-container" style={{ width: '100%', height: '100%' }}>
-      <div ref={revealRef} className="reveal">
-        <div className="slides">
-          {children}
+    <>
+      <RevealStyles />
+      <div className="reveal-container" style={{ width: '100%', height: '700px', maxHeight: '90vh' }}>
+        <div ref={revealRef} className="reveal">
+          <div className="slides">
+            {children}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
