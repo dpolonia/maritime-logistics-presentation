@@ -35,15 +35,10 @@ const RevealWrapper: React.FC<RevealWrapperProps> = ({ children, config = {} }) 
     // Only run in browser
     if (typeof window === 'undefined' || !revealRef.current) return;
     
-    // Import Reveal.js dynamically
-    const importReveal = async () => {
+    // Check if Reveal is available as global variable from CDN
+    if (typeof window.Reveal !== 'undefined') {
       try {
-        // First load reveal.js
-        const RevealModule = await import('reveal.js');
-        const Reveal = RevealModule.default;
-        
-        // Configure and initialize
-        const reveal = new Reveal(revealRef.current, {
+        const reveal = new window.Reveal(revealRef.current, {
           controls: config.controls !== false,
           progress: config.progress !== false,
           center: config.center !== false,
@@ -56,15 +51,45 @@ const RevealWrapper: React.FC<RevealWrapperProps> = ({ children, config = {} }) 
           ...config
         });
         
-        await reveal.initialize();
-        console.log('Reveal.js initialized successfully');
+        reveal.initialize();
+        console.log('Reveal.js initialized successfully from CDN');
       } catch (error) {
-        console.error('Failed to initialize Reveal.js:', error);
+        console.error('Failed to initialize Reveal.js from CDN:', error);
       }
-    };
-    
-    // Load reveal.js
-    importReveal();
+    } else {
+      // Fallback: Load from npm package if CDN failed
+      const loadRevealFromNpm = async () => {
+        try {
+          const RevealModule = await import('reveal.js');
+          const Reveal = RevealModule.default;
+          
+          const reveal = new Reveal(revealRef.current, {
+            controls: config.controls !== false,
+            progress: config.progress !== false,
+            center: config.center !== false,
+            hash: true,
+            transition: config.transition || 'slide',
+            backgroundTransition: config.backgroundTransition || 'fade',
+            viewDistance: config.viewDistance || 3,
+            autoPlayMedia: config.autoPlayMedia !== false,
+            fragments: config.fragments !== false,
+            ...config
+          });
+          
+          await reveal.initialize();
+          console.log('Reveal.js initialized successfully from npm package');
+        } catch (error) {
+          console.error('Failed to initialize Reveal.js from npm package:', error);
+        }
+      };
+      
+      // Wait a bit for CDN to potentially load
+      setTimeout(() => {
+        if (typeof window.Reveal === 'undefined') {
+          loadRevealFromNpm();
+        }
+      }, 1000);
+    }
     
     return () => {
       // Cleanup could be added here if needed
@@ -84,5 +109,12 @@ const RevealWrapper: React.FC<RevealWrapperProps> = ({ children, config = {} }) 
     </>
   );
 };
+
+// Add global type definition
+declare global {
+  interface Window {
+    Reveal?: any;
+  }
+}
 
 export default RevealWrapper;
