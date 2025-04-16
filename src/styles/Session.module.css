@@ -1,0 +1,64 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #0c4a6e;
+  color: white;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.homeLink {
+  color: white;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.slideContainer {
+  flex: 1;
+  padding: 2rem;
+}
+
+.engagementContainer {
+  padding: 0 2rem 1rem;
+}
+
+.footer {
+  padding: 1rem 0;
+  border-top: 1px solid #e2e8f0;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.25rem;
+  color: #64748b;
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.25rem;
+  color: #ef4444;
+}

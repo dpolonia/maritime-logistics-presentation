@@ -1,0 +1,78 @@
+{
+  "name": "Presentation System",
+  "short_name": "Presenter",
+  "description": "Optimized presentation system for interactive educational experiences",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0284c7",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Start Presentation",
+      "short_name": "Present",
+      "description": "Start presentation in full screen mode",
+      "url": "/?mode=present",
+      "icons": [
+        {
+          "src": "/icons/present-icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Presenter View",
+      "short_name": "Notes",
+      "description": "Open presenter view with notes",
+      "url": "/?mode=presenter",
+      "icons": [
+        {
+          "src": "/icons/notes-icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "orientation": "any",
+  "categories": ["education", "productivity"],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "web",
+      "label": "Desktop view of the presentation system"
+    },
+    {
+      "src": "/screenshots/mobile.png",
+      "sizes": "360x640",
+      "type": "image/png",
+      "platform": "web",
+      "label": "Mobile view of the presentation system"
+    }
+  ],
+  "lang": "en-US",
+  "dir": "ltr",
+  "iarc_rating_id": "",
+  "scope": "/",
+  "serviceworker": {
+    "src": "/sw.js",
+    "scope": "/",
+    "update_via_cache": "none"
+  }
+}

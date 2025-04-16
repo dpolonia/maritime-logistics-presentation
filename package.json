@@ -1,27 +1,25 @@
 {
-  "name": "presentation-system",
-  "version": "0.1.0",
+  "name": "nexus-presentation-system",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.2.5"
+    "next": "15.2.5",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "@vercel/analytics": "^1.2.0",
+    "@vercel/speed-insights": "^1.0.9"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
-    "eslint": "^9",
+    "eslint": "8.57.0",
     "eslint-config-next": "15.2.5",
-    "@eslint/eslintrc": "^3"
+    "@types/node": "20.11.30",
+    "@types/react": "19.0.10",
+    "typescript": "5.4.3"
   }
 }
