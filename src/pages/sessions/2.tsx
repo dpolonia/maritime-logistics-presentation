@@ -8,27 +8,15 @@ import NavigationControls from '../../components/NavigationControls';
 import ParticipantEngagement from '../../components/ParticipantEngagement';
 import ProgressTracker from '../../components/ProgressTracker';
 import dynamic from 'next/dynamic';
-import { initPerformanceMonitoring, startTiming, endTiming } from '@/utils/performance';
-
-// Dynamically import the RevealWrapper to avoid SSR issues
-const RevealWrapper = dynamic(
-  () => import('@/components/presentation/RevealWrapper'),
-  { ssr: false }
-);
 
 export default function Session2() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   
-  // Initialize performance monitoring
   useEffect(() => {
-    startTiming('session2-initialization');
-    initPerformanceMonitoring();
-    
     // Simulate loading content
     const timer = setTimeout(() => {
       setIsLoading(false);
-      endTiming('session2-initialization');
     }, 500);
     
     return () => {
@@ -40,50 +28,14 @@ export default function Session2() {
     return <div className={styles.loading}>Loading session...</div>;
   }
 
-  // Check if we're on the client side and window exists
-  const isBrowser = typeof window !== 'undefined';
-
-  // Simplified version if client-side rendering fails
-  const renderStaticContent = () => (
-    <div className={styles.staticContent}>
-      <h1>Session 2: Technology Stack for Maritime and Logistics Innovation</h1>
-      <div className={styles.contentSection}>
-        <h2>Learning Objectives</h2>
-        <ul>
-          <li>Evaluate Technology Applicability</li>
-          <li>Analyze Implementation Prerequisites</li>
-          <li>Map Technology-Challenge Alignment</li>
-          <li>Identify Integration Requirements</li>
-          <li>Develop Technology Roadmaps</li>
-        </ul>
-      </div>
-      
-      <div className={styles.contentSection}>
-        <h2>Technology Context in Maritime and Logistics</h2>
-        <ul>
-          <li>Digital Maturity</li>
-          <li>Maritime Adaptations</li>
-          <li>NEXUS Strategy</li>
-        </ul>
-      </div>
-      
-      <div className={styles.contentSection}>
-        <h2>Key Technologies</h2>
-        <ul>
-          <li>AI and Machine Learning Applications</li>
-          <li>Blockchain and Distributed Ledger Technologies</li>
-          <li>IoT, Cloud, and Edge Computing</li>
-          <li>Next-Generation Connectivity</li>
-        </ul>
-      </div>
-    </div>
-  );
-
   return (
     <div className={styles.container}>
       <Head>
         <title>Session 2: Technology Stack for Maritime and Logistics Innovation | NEXUS Agenda Course</title>
-        <meta name="description" content="Session 2: Technology Stack for Maritime and Logistics Innovation - Learn about advanced technologies for maritime and logistics applications" />
+        <meta name="description" content="Session 2: Technology Stack for Maritime and Logistics Innovation" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.4.0/dist/reveal.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.4.0/dist/theme/white.css" />
+        <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.4.0/dist/reveal.js"></script>
       </Head>
 
       <header className={styles.header}>
@@ -94,637 +46,82 @@ export default function Session2() {
       </header>
 
       <main className={styles.main}>
-        {isBrowser ? (
-          <RevealWrapper
-          config={{
-            controls: true,
-            progress: true,
-            center: true,
-            transition: 'slide',
-            backgroundTransition: 'fade',
-            viewDistance: 3,
-            autoPlayMedia: true,
-            fragments: true,
-            // For accessibility
-            accessibility: {
-              keyboardNavigation: true,
-              skipLinks: true,
-              navigationMode: 'linear',
-              help: true,
-            },
-            // Track performance metrics
-            presentationRecording: process.env.NODE_ENV === 'development',
-          }}
-        >
-          {/* Title Slide */}
-          <section className="slide" data-background-color="#0a558c">
-            <div className="slide-content">
-              <h1 className="text-5xl font-bold text-white mb-6">
-                Technology Stack for Maritime and Logistics Innovation
-              </h1>
-              <h2 className="text-3xl text-white/90 mb-8">
-                Session 2: NEXUS Agenda Course
-              </h2>
-              <p className="text-xl text-white/80">
-                Advanced technologies and implementation strategies for the maritime sector
-              </p>
-            </div>
-          </section>
-
-          {/* Learning Objectives Slide */}
-          <section className="slide" data-background-color="#ffffff">
-            <div className="slide-content">
-              <h2 className="text-4xl font-bold text-gray-900 mb-8">Learning Objectives</h2>
-              <ul className="text-left space-y-4">
-                <li className="flex items-start">
-                  <div className="bg-blue-600 p-2 rounded-full mr-4 mt-1">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-xl font-semibold text-gray-800">Evaluate Technology Applicability</p>
-                    <p className="text-gray-600">Assess which specific technologies are most appropriate for different NEXUS components and identify key selection criteria</p>
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <div className="bg-blue-600 p-2 rounded-full mr-4 mt-1">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-xl font-semibold text-gray-800">Analyze Implementation Prerequisites</p>
-                    <p className="text-gray-600">Identify technical, operational, and organizational prerequisites for successful technology implementation</p>
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <div className="bg-blue-600 p-2 rounded-full mr-4 mt-1">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-xl font-semibold text-gray-800">Map Technology-Challenge Alignment</p>
-                    <p className="text-gray-600">Match specific maritime and logistics challenges with appropriate technological solutions</p>
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <div className="bg-blue-600 p-2 rounded-full mr-4 mt-1">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-xl font-semibold text-gray-800">Identify Integration Requirements</p>
-                    <p className="text-gray-600">Determine integration requirements between different technologies, focusing on data flows and interoperability</p>
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <div className="bg-blue-600 p-2 rounded-full mr-4 mt-1">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-xl font-semibold text-gray-800">Develop Technology Roadmaps</p>
-                    <p className="text-gray-600">Create phased implementation plans for introducing advanced technologies into NEXUS components</p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </section>
-
-          {/* Technology Context Section */}
-          <section>
-            <section className="slide" data-background-color="#f8fafc">
-              <div className="slide-content">
-                <h2 className="text-4xl font-bold text-gray-900 mb-6">Technology Context in Maritime and Logistics</h2>
-                <div className="bg-white p-6 rounded-lg shadow-lg">
-                  <p className="text-xl mb-4">Understanding the current landscape, challenges, and opportunities</p>
-                  <div className="grid grid-cols-3 gap-4 text-center mt-8">
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">Digital Maturity</h3>
-                      <p className="text-gray-600">Current state and benchmarking</p>
-                    </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">Maritime Adaptations</h3>
-                      <p className="text-gray-600">Sector-specific considerations</p>
-                    </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">NEXUS Strategy</h3>
-                      <p className="text-gray-600">Technology portfolio approach</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section className="slide" data-background-color="#f8fafc">
-              <div className="slide-content">
-                <h3 className="text-3xl font-bold text-gray-900 mb-6">Digital Maturity Landscape</h3>
-                <div className="bg-white p-6 rounded-lg shadow-lg">
-                  <ul className="space-y-4">
-                    <li className="flex items-start">
-                      <div className="bg-blue-100 p-2 rounded-full mr-3 mt-1">
-                        <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="font-semibold">Current state assessment of Portuguese port technology adoption</p>
-                        <p className="text-gray-600">Evaluation of existing systems, integration levels, and digital capabilities</p>
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="bg-blue-100 p-2 rounded-full mr-3 mt-1">
-                        <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="font-semibold">International benchmarking against leading digital ports</p>
-                        <p className="text-gray-600">Comparison with Rotterdam, Singapore, Hamburg, and other digital leaders</p>
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="bg-blue-100 p-2 rounded-full mr-3 mt-1">
-                        <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="font-semibold">Sector-specific implementation challenges and success factors</p>
-                        <p className="text-gray-600">Critical factors that influence technology adoption in maritime environments</p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            <section className="slide" data-background-color="#f8fafc">
-              <div className="slide-content">
-                <h3 className="text-3xl font-bold text-gray-900 mb-6">Maritime-Specific Technology Adaptations</h3>
-                <div className="bg-white p-6 rounded-lg shadow-lg">
-                  <ul className="space-y-4">
-                    <li className="flex items-start">
-                      <div className="bg-blue-100 p-2 rounded-full mr-3 mt-1">
-                        <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="font-semibold">Operational constraints affecting technology implementation</p>
-                        <p className="text-gray-600">24/7 operations, equipment reliability requirements, and interface with global systems</p>
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="bg-blue-100 p-2 rounded-full mr-3 mt-1">
-                        <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="font-semibold">Environmental considerations for maritime deployments</p>
-                        <p className="text-gray-600">Saltwater exposure, weather conditions, electromagnetic interference, and power requirements</p>
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="bg-blue-100 p-2 rounded-full mr-3 mt-1">
-                        <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="font-semibold">Regulatory frameworks governing maritime technology adoption</p>
-                        <p className="text-gray-600">IMO regulations, customs requirements, security standards, and privacy considerations</p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            <section className="slide" data-background-color="#f8fafc">
-              <div className="slide-content">
-                <h3 className="text-3xl font-bold text-gray-900 mb-6">NEXUS Technology Strategy</h3>
-                <div className="bg-white p-6 rounded-lg shadow-lg">
-                  <ul className="space-y-4">
-                    <li className="flex items-start">
-                      <div className="bg-blue-100 p-2 rounded-full mr-3 mt-1">
-                        <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="font-semibold">Portfolio approach to technology selection and implementation</p>
-                        <p className="text-gray-600">Strategic framework for evaluating and selecting complementary technologies</p>
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="bg-blue-100 p-2 rounded-full mr-3 mt-1">
-                        <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="font-semibold">Capability building requirements across stakeholders</p>
-                        <p className="text-gray-600">Skills development, organizational change management, and training approaches</p>
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="bg-blue-100 p-2 rounded-full mr-3 mt-1">
-                        <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="font-semibold">Standards and interoperability considerations</p>
-                        <p className="text-gray-600">Adoption of industry standards, API specifications, and data exchange protocols</p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-          </section>
-
-          {/* AI and Machine Learning Section */}
-          <section>
-            <section className="slide" data-background-color="#e1effe">
-              <div className="slide-content">
-                <h2 className="text-4xl font-bold text-gray-900 mb-6">AI and Machine Learning Applications</h2>
-                <div className="bg-white p-6 rounded-lg shadow-lg">
-                  <p className="text-xl mb-4">Intelligent systems for maritime and logistics optimization</p>
-                  <div className="grid grid-cols-3 gap-4 text-center mt-8">
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">Maritime AI Use Cases</h3>
-                      <p className="text-gray-600">Domain-specific applications</p>
-                    </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">Implementation Architecture</h3>
-                      <p className="text-gray-600">Technical framework and approach</p>
-                    </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">NEXUS Applications</h3>
-                      <p className="text-gray-600">Project-specific integrations</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section className="slide" data-background-color="#e1effe">
-              <div className="slide-content">
-                <h3 className="text-3xl font-bold text-gray-900 mb-6">Maritime AI Use Cases</h3>
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="bg-white p-5 rounded-lg shadow">
-                    <h4 className="text-xl font-semibold text-blue-800 mb-3">Predictive Maintenance</h4>
-                    <ul className="space-y-2">
-                      <li className="flex items-start">
-                        <span className="text-blue-600 mr-2">•</span>
-                        <span>Equipment failure prediction using sensor data</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-600 mr-2">•</span>
-                        <span>Maintenance scheduling optimization</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-600 mr-2">•</span>
-                        <span>Reduced downtime and operational disruption</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="bg-white p-5 rounded-lg shadow">
-                    <h4 className="text-xl font-semibold text-blue-800 mb-3">Operational Optimization</h4>
-                    <ul className="space-y-2">
-                      <li className="flex items-start">
-                        <span className="text-blue-600 mr-2">•</span>
-                        <span>Container stacking and yard management</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-600 mr-2">•</span>
-                        <span>Berth allocation and vessel scheduling</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-600 mr-2">•</span>
-                        <span>Resource allocation optimization</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="bg-white p-5 rounded-lg shadow">
-                    <h4 className="text-xl font-semibold text-blue-800 mb-3">Document Processing</h4>
-                    <ul className="space-y-2">
-                      <li className="flex items-start">
-                        <span className="text-blue-600 mr-2">•</span>
-                        <span>Automated document classification</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-600 mr-2">•</span>
-                        <span>Data extraction from shipping documents</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-600 mr-2">•</span>
-                        <span>Customs facilitation and clearance</span>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="bg-white p-5 rounded-lg shadow">
-                    <h4 className="text-xl font-semibold text-blue-800 mb-3">Synchromodal Transport</h4>
-                    <ul className="space-y-2">
-                      <li className="flex items-start">
-                        <span className="text-blue-600 mr-2">•</span>
-                        <span>Real-time multi-modal route optimization</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-600 mr-2">•</span>
-                        <span>Dynamic carrier selection and allocation</span>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-blue-600 mr-2">•</span>
-                        <span>Emissions reduction through optimal modal shifts</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section className="slide" data-background-color="#e1effe">
-              <div className="slide-content">
-                <h3 className="text-3xl font-bold text-gray-900 mb-6">Implementation Architecture</h3>
-                <div className="bg-white p-6 rounded-lg shadow-lg">
-                  <div className="grid grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="text-xl font-semibold text-blue-800 mb-3">Data Requirements</h4>
-                      <ul className="space-y-2 mb-6">
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Data collection infrastructure and protocols</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Data quality assessment and preparation</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Historical data requirements by use case</span>
-                        </li>
-                      </ul>
-                      
-                      <h4 className="text-xl font-semibold text-blue-800 mb-3">Model Development</h4>
-                      <ul className="space-y-2">
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Model selection and training approaches</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Evaluation metrics for maritime applications</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Periodic retraining and model evolution</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-semibold text-blue-800 mb-3">Integration Approach</h4>
-                      <ul className="space-y-2 mb-6">
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>API-based model serving architecture</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Integration with operational systems</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Data pipelines for real-time processing</span>
-                        </li>
-                      </ul>
-                      
-                      <h4 className="text-xl font-semibold text-blue-800 mb-3">Performance Monitoring</h4>
-                      <ul className="space-y-2">
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Model performance and drift detection</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Operational KPIs and business impact</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Feedback loops for continuous improvement</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <section className="slide" data-background-color="#e1effe">
-              <div className="slide-content">
-                <h3 className="text-3xl font-bold text-gray-900 mb-6">NEXUS-Specific Applications</h3>
-                <div className="bg-white p-6 rounded-lg shadow-lg">
-                  <div className="grid grid-cols-1 gap-6">
-                    <div className="border-l-4 border-blue-600 pl-4">
-                      <h4 className="text-xl font-semibold text-blue-800 mb-2">Open Data Platform Analytics</h4>
-                      <p className="mb-4">Integration of AI capabilities with the NEXUS Open Data Platform</p>
-                      <ul className="space-y-1">
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Predictive analytics on aggregated port and logistics data</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Pattern recognition for operational anomalies</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Decision support dashboards with AI-driven recommendations</span>
-                        </li>
-                      </ul>
-                    </div>
-                    
-                    <div className="border-l-4 border-blue-600 pl-4">
-                      <h4 className="text-xl font-semibold text-blue-800 mb-2">AI-Enhanced Federated Applications</h4>
-                      <p className="mb-4">AI capabilities integrated into NEXUS application portfolio</p>
-                      <ul className="space-y-1">
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Predictive ETA for vessel and cargo tracking applications</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Intelligent document processing for customs applications</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Resource optimization modules for terminal operations</span>
-                        </li>
-                      </ul>
-                    </div>
-                    
-                    <div className="border-l-4 border-blue-600 pl-4">
-                      <h4 className="text-xl font-semibold text-blue-800 mb-2">Digital Twin Integration</h4>
-                      <p className="mb-4">AI integration with hardware assets via digital twin architecture</p>
-                      <ul className="space-y-1">
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Real-time anomaly detection for equipment performance</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Predictive maintenance for port infrastructure and equipment</span>
-                        </li>
-                        <li className="flex items-start">
-                          <span className="text-blue-600 mr-2">•</span>
-                          <span>Simulation capabilities for operational planning and optimization</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </section>
-
-          {/* Blockchain Section */}
-          <section>
-            <section className="slide" data-background-color="#e6f7ff">
-              <div className="slide-content">
-                <h2 className="text-4xl font-bold text-gray-900 mb-6">Blockchain and Distributed Ledger Technologies</h2>
-                <div className="bg-white p-6 rounded-lg shadow-lg">
-                  <p className="text-xl mb-4">Trusted, transparent transactions for maritime supply chains</p>
-                  <div className="grid grid-cols-3 gap-4 text-center mt-8">
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">Maritime Use Cases</h3>
-                      <p className="text-gray-600">Supply chain and documentation applications</p>
-                    </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">Implementation Architecture</h3>
-                      <p className="text-gray-600">Technical framework and protocols</p>
-                    </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">NEXUS Applications</h3>
-                      <p className="text-gray-600">Project-specific integrations</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* Additional blockchain section slides would go here */}
-          </section>
-
-          {/* IoT Section */}
-          <section>
-            <section className="slide" data-background-color="#edf2f7">
-              <div className="slide-content">
-                <h2 className="text-4xl font-bold text-gray-900 mb-6">IoT, Cloud, and Edge Computing</h2>
-                <div className="bg-white p-6 rounded-lg shadow-lg">
-                  <p className="text-xl mb-4">Connecting the physical and digital worlds in maritime environments</p>
-                  <div className="grid grid-cols-3 gap-4 text-center mt-8">
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">Maritime IoT Landscape</h3>
-                      <p className="text-gray-600">Sensor networks and applications</p>
-                    </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">Implementation Architecture</h3>
-                      <p className="text-gray-600">Technical framework and approach</p>
-                    </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">NEXUS Applications</h3>
-                      <p className="text-gray-600">Project-specific integrations</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* Additional IoT section slides would go here */}
-          </section>
-
-          {/* Connectivity Section */}
-          <section>
-            <section className="slide" data-background-color="#f0f9ff">
-              <div className="slide-content">
-                <h2 className="text-4xl font-bold text-gray-900 mb-6">Next-Generation Connectivity</h2>
-                <div className="bg-white p-6 rounded-lg shadow-lg">
-                  <p className="text-xl mb-4">5G/6G and advanced networking for maritime operations</p>
-                  <div className="grid grid-cols-3 gap-4 text-center mt-8">
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">5G/6G Applications</h3>
-                      <p className="text-gray-600">Maritime-specific use cases</p>
-                    </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">Private Networks</h3>
-                      <p className="text-gray-600">Security and implementation</p>
-                    </div>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h3 className="text-xl font-semibold text-gray-800 mb-2">NEXUS Applications</h3>
-                      <p className="text-gray-600">Project-specific requirements</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            {/* Additional connectivity section slides would go here */}
-          </section>
-
-          {/* Activities Preview */}
-          <section className="slide" data-background-color="#0a558c">
-            <div className="slide-content">
-              <h2 className="text-4xl font-bold text-white mb-8">Interactive Activities</h2>
-              
-              <div className="grid grid-cols-3 gap-6">
-                <div className="bg-white/20 backdrop-blur-sm p-5 rounded-lg">
-                  <h3 className="text-2xl font-semibold text-white mb-3">Technology-Challenge Mapping</h3>
-                  <p className="text-white/90">Collaborative exercise matching technologies to maritime challenges</p>
-                </div>
-                
-                <div className="bg-white/20 backdrop-blur-sm p-5 rounded-lg">
-                  <h3 className="text-2xl font-semibold text-white mb-3">Solution Architecture Design</h3>
-                  <p className="text-white/90">Technical design workshop for NEXUS components</p>
-                </div>
-                
-                <div className="bg-white/20 backdrop-blur-sm p-5 rounded-lg">
-                  <h3 className="text-2xl font-semibold text-white mb-3">Technology Roadmap Development</h3>
-                  <p className="text-white/90">Creating phased implementation plans</p>
-                </div>
-              </div>
-              
-              <div className="mt-8 text-white/80">
-                <p>The activities are designed for cross-functional collaboration and hands-on application of concepts</p>
-              </div>
-            </div>
-          </section>
-
-          {/* Final Slide */}
-          <section className="slide" data-background-color="#0a558c">
-            <div className="slide-content">
-              <h2 className="text-5xl font-bold text-white mb-8">Thank You</h2>
-              
-              <div className="bg-white/10 backdrop-blur-sm p-8 rounded-lg max-w-2xl mx-auto">
-                <p className="text-2xl text-white mb-6">
-                  Session 2: Technology Stack for Maritime and Logistics Innovation
-                </p>
-                
-                <div className="text-white/80">
-                  <p>Next session will focus on implementation strategies and technical integration approaches</p>
-                </div>
-              </div>
-            </div>
-          </section>
-        </RevealWrapper>
-        ) : renderStaticContent()}
+        {/* Static version of the content without RevealWrapper */}
+        <div className={styles.staticContent}>
+          <h1>Session 2: Technology Stack for Maritime and Logistics Innovation</h1>
+          
+          <div className={styles.contentSection}>
+            <h2>Learning Objectives</h2>
+            <ul>
+              <li>Evaluate Technology Applicability - Assess which specific technologies are most appropriate for different NEXUS components</li>
+              <li>Analyze Implementation Prerequisites - Identify technical, operational, and organizational prerequisites</li>
+              <li>Map Technology-Challenge Alignment - Match specific maritime challenges with appropriate technological solutions</li>
+              <li>Identify Integration Requirements - Determine data flows and interoperability needs</li>
+              <li>Develop Technology Roadmaps - Create phased implementation plans</li>
+            </ul>
+          </div>
+          
+          <div className={styles.contentSection}>
+            <h2>Technology Context in Maritime and Logistics</h2>
+            <ul>
+              <li>Digital Maturity - Current state assessment of port technology adoption and international benchmarking</li>
+              <li>Maritime Adaptations - Environmental and operational constraints affecting technology implementation</li>
+              <li>NEXUS Strategy - Portfolio approach to technology selection, capability building, and standards</li>
+            </ul>
+          </div>
+          
+          <div className={styles.contentSection}>
+            <h2>AI and Machine Learning Applications</h2>
+            <ul>
+              <li>Maritime AI Use Cases - Predictive maintenance, operational optimization, document processing</li>
+              <li>Implementation Architecture - Data requirements, model development, integration approaches</li>
+              <li>NEXUS Applications - Open data platform analytics, federated applications, digital twin integration</li>
+            </ul>
+          </div>
+          
+          <div className={styles.contentSection}>
+            <h2>Blockchain and Distributed Ledger</h2>
+            <ul>
+              <li>Supply Chain Transparency - Provenance tracking, certificates of origin</li>
+              <li>Smart Contracts - Automated customs clearance, insurance claims, payments</li>
+              <li>Document Management - Secure, tamper-proof storage and verification</li>
+            </ul>
+          </div>
+          
+          <div className={styles.contentSection}>
+            <h2>IoT, Cloud, and Edge Computing</h2>
+            <ul>
+              <li>Sensor Networks - Equipment monitoring, cargo tracking, environmental conditions</li>
+              <li>Edge Processing - Real-time data analysis, reduced bandwidth requirements</li>
+              <li>Cloud Integration - Central data repositories, analytics, machine learning</li>
+            </ul>
+          </div>
+          
+          <div className={styles.contentSection}>
+            <h2>Next-Generation Connectivity</h2>
+            <ul>
+              <li>5G/6G Applications - Ultra-reliable low-latency communications, massive IoT deployments</li>
+              <li>Private Networks - Secure, dedicated infrastructure for critical operations</li>
+              <li>NEXUS Requirements - Bandwidth, latency, reliability considerations for maritime applications</li>
+            </ul>
+          </div>
+          
+          <div className={styles.contentSection}>
+            <h2>Interactive Activities</h2>
+            <ul>
+              <li>Technology-Challenge Mapping - Collaborative exercise matching technologies to maritime challenges</li>
+              <li>Solution Architecture Design - Technical design workshop for NEXUS components</li>
+              <li>Technology Roadmap Development - Creating phased implementation plans</li>
+            </ul>
+          </div>
+        </div>
       </main>
+      
+      <footer className={styles.footer}>
+        <div className={styles.footerContent}>
+          <p>&copy; 2025 NEXUS Agenda Course</p>
+        </div>
+      </footer>
     </div>
   );
 }
