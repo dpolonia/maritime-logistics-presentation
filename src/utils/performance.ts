@@ -13,6 +13,18 @@ interface PerformanceTimings {
   [key: string]: number;
 }
 
+// Add global custom type definitions
+declare global {
+  interface Window {
+    _monitor?: {
+      emit: (event: string, data: any) => void;
+    };
+    webVitals?: any;
+    reportWebVitals?: (metric: any) => void;
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 // Store timing marks for performance measurements
 const timings: PerformanceTimings = {};
 
@@ -108,8 +120,7 @@ function reportPerformanceMetric(metric: PerformanceMetric): void {
   });
   
   // If real-time monitoring is enabled and Web Vitals is supported
-  if (typeof window !== 'undefined' && 'reportWebVitals' in window) {
-    // @ts-ignore - Custom global function
+  if (typeof window !== 'undefined' && window.reportWebVitals) {
     window.reportWebVitals({
       name: metric.name,
       value: metric.value,
@@ -124,8 +135,7 @@ function reportPerformanceMetric(metric: PerformanceMetric): void {
   ) {
     try {
       // If socket connection exists, send the metric
-      if ('_monitor' in window && typeof window._monitor?.emit === 'function') {
-        // @ts-ignore - Custom global socket
+      if (window._monitor && typeof window._monitor.emit === 'function') {
         window._monitor.emit('performance', metric);
       }
     } catch (error) {
@@ -196,7 +206,7 @@ export function initPerformanceMonitoring(): void {
     });
     
     // Track FCP and LCP using Web Vitals if available
-    if ('webVitals' in window) {
+    if (window.webVitals) {
       import('web-vitals').then(({ onFCP, onLCP, onCLS, onFID, onTTFB }) => {
         onFCP((metric) => {
           reportPerformanceMetric({

@@ -8,8 +8,31 @@ import NavigationControls from '../../components/NavigationControls';
 import ParticipantEngagement from '../../components/ParticipantEngagement';
 import ProgressTracker from '../../components/ProgressTracker';
 
+// Type definitions
+interface SessionData {
+  id: number;
+  title: string;
+  objectives: string[];
+  content: string[];
+  activities: string[];
+  assessment: string[];
+  resources: string[];
+}
+
+interface SlideContent {
+  type: 'objective' | 'content' | 'activity' | 'assessment' | 'resource';
+  content: string;
+}
+
+// Add gtag type definition
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 // Session data structure
-const sessionData = [
+const sessionData: SessionData[] = [
   {
     id: 1,
     title: 'Overview of NEXUS Agenda and Advanced Technologies',
@@ -55,13 +78,13 @@ const sessionData = [
 export default function Session() {
   const router = useRouter();
   const { id } = router.query;
-  const [session, setSession] = useState(null);
+  const [session, setSession] = useState<SessionData | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   
   // Performance monitoring
   useEffect(() => {
-    const reportPerformanceMetric = (metric, value) => {
+    const reportPerformanceMetric = (metric: string, value: number) => {
       if (window.gtag) {
         window.gtag('event', 'performance_metric', {
           metric_name: metric,
@@ -74,7 +97,7 @@ export default function Session() {
     // Report page load time
     if (typeof window !== 'undefined' && !isLoading) {
       setTimeout(() => {
-        const navigationEntry = performance.getEntriesByType('navigation')[0];
+        const navigationEntry = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
         reportPerformanceMetric('load_time', navigationEntry.duration);
       }, 0);
     }
@@ -121,18 +144,18 @@ export default function Session() {
     ].length;
   };
 
-  const getCurrentSlideContent = () => {
+  const getCurrentSlideContent = (): SlideContent | null => {
     if (!session) return null;
     
-    const allContent = [
-      ...session.objectives.map(item => ({ type: 'objective', content: item })),
-      ...session.content.map(item => ({ type: 'content', content: item })),
-      ...session.activities.map(item => ({ type: 'activity', content: item })),
-      ...session.assessment.map(item => ({ type: 'assessment', content: item })),
-      ...session.resources.map(item => ({ type: 'resource', content: item }))
+    const allContent: SlideContent[] = [
+      ...session.objectives.map(item => ({ type: 'objective' as const, content: item })),
+      ...session.content.map(item => ({ type: 'content' as const, content: item })),
+      ...session.activities.map(item => ({ type: 'activity' as const, content: item })),
+      ...session.assessment.map(item => ({ type: 'assessment' as const, content: item })),
+      ...session.resources.map(item => ({ type: 'resource' as const, content: item }))
     ];
     
-    return allContent[currentSlide];
+    return allContent[currentSlide] || null;
   };
 
   if (isLoading) {

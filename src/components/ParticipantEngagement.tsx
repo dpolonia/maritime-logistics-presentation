@@ -6,6 +6,13 @@ interface ParticipantEngagementProps {
   slideType?: 'objective' | 'content' | 'activity' | 'assessment' | 'resource';
 }
 
+// Add gtag type definition
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+  }
+}
+
 export default function ParticipantEngagement({
   sessionId,
   slideType
